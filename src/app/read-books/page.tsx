@@ -40,8 +40,11 @@ const ReadBooks = () => {
     "black",
   ];
 
-
-const {readBooks}: {readBooks: Book[]} = useContext(BooksContext);
+  const context = useContext(BooksContext);
+  if (!context) {
+    throw new Error("Component must be used inside BooksProvider");
+  }
+  const { readBooks } = context;
   const data = readBooks.map((book: Book,index) => ({
     name: book.bookName,
     uv: book.totalPages,

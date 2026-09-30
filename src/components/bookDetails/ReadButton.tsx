@@ -18,7 +18,11 @@ interface Book {
   yearOfPublishing: number;
 }
 const ReadButton = ({ book }: { book: Book }) => {
-  const { readBooks, setReadBooks } = useContext(BooksContext);
+  const context = useContext(BooksContext);
+  if (!context) {
+    throw new Error("Component must be used inside BooksProvider");
+  }
+  const { readBooks, setReadBooks } = context;
   const handleReadBook = () => {
     setReadBooks([...readBooks, book]);
     toast.success("Book added to read list!");

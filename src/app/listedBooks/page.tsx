@@ -17,8 +17,11 @@ interface Book {
 }
 
 const ListedBooksPage = () => {
-  const { readBooks, setReadBooks, wishlist, setWishList } =
-    useContext(BooksContext);
+  const context = useContext(BooksContext);
+  if (!context) {
+    throw new Error("Component must be used inside BooksProvider");
+  }
+  const { readBooks, wishlist } = context;
   const [sortBy, setSortBy] = useState<"rating" | "pages" | "year">("rating");
 
   const sortedReadBooks = [...readBooks].sort((a, b) => {

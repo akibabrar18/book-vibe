@@ -18,7 +18,11 @@ interface Book {
   yearOfPublishing: number;
 }
 const WishListButton = ({ book }: { book: Book }) => {
-  const { wishlist, setWishlist } = useContext(BooksContext);
+  const context = useContext(BooksContext);
+  if (!context) {
+    throw new Error("Component must be used inside BooksProvider");
+  }
+  const { wishlist, setWishlist } = context;
   const handleAddToWishlist = () => {
     setWishlist([...wishlist, book]);
     toast.success("Book added to wishlist!");
